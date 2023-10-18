@@ -22,7 +22,7 @@ export const Profile = () => {
   }, []);
   const fetchProfile = async (userUuid) => {
     try {
-      const response = await axios.get(`http://test2.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`);//(`http://localhost:8002/feed?user-uuid=${userUuid}`)//(`http://test2.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`)//(`http://test2.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`);
+      const response = await axios.get(`https://foralpha.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`);//(`http://localhost:8002/feed?user-uuid=${userUuid}`)//(`https://foralpha.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`)//(`https://foralpha.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`);
       const profileData = response.data.payload.profile;
       setProfileData(profileData);
       console.log("Feed loaded");

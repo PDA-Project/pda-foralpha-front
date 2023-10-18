@@ -47,7 +47,7 @@ export const Login = () => {
 
   // 소셜 로그인
   const socialLoginHandler = (provider) => {
-    const SOCIAL_AUTH_URL = `http://test2.shinhan.site/oauth2/authorize/${provider}`;
+    const SOCIAL_AUTH_URL = `https://foralpha.shinhan.site/oauth2/authorize/${provider}`;
     window.location.href = SOCIAL_AUTH_URL;
   };
 
@@ -71,7 +71,7 @@ export const Login = () => {
   }, [location, navigate]);
 
   const handleSubmit = async (e) => {
-    const USER_SERVICE_URL = 'http://test2.shinhan.site';
+    const USER_SERVICE_URL = 'https://foralpha.shinhan.site';
   
     e.preventDefault();
     if (isEmail && isPassword) {

@@ -21,7 +21,7 @@ export const Card = () => {
   }, []);
   const fetchCard = async (userUuid) => {
     try {
-      const response = await axios.get(`http://test2.shinhan.site/foralpha-service/profile/theme-card?user-uuid=${userUuid}`)
+      const response = await axios.get(`https://foralpha.shinhan.site/foralpha-service/profile/theme-card?user-uuid=${userUuid}`)
       const cardData = response.data.payload.themeCardList;
       setCardData(cardData);
       console.log("Feed loaded");

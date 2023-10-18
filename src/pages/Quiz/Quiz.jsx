@@ -40,7 +40,7 @@ export const Quiz = () => {
   const fetchQuestion = async () => {
     try {
       // quiz 문제 조회
-      const response = await axios.get("http://test2.shinhan.site/foralpha-service/point/quiz");
+      const response = await axios.get("https://foralpha.shinhan.site/foralpha-service/point/quiz");
       const quizText = response.data.payload.quiz_question;
       const quizAnswer = response.data.payload.quiz_answer;
       const quizExplanation = response.data.payload.quiz_explanation;
@@ -76,7 +76,7 @@ export const Quiz = () => {
         user_id: "ca5f9e53-6caf-11ee-bde4-027e9aa2905c",
         quizAnswer: choice,
       };
-      await axios.post("http://test2.shinhan.site/foralpha-service/point/quiz", quizData)
+      await axios.post("https://foralpha.shinhan.site/foralpha-service/point/quiz", quizData)
         .then((response) => {
           if(response.status === 201){
             console.log("success")

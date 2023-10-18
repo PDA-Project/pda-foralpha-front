@@ -41,7 +41,7 @@ export const Prediction = () => {
     console.log("hhihi");
     console.log(stockname);
 
-    Axios.get("http://test2.shinhan.site/foralpha-service/stocks/055550/details")
+    Axios.get("https://foralpha.shinhan.site/foralpha-service/stocks/055550/details")
       .then((response) => {
         const stockData = response.data.payload.price_data;
         const movingAverageData = response.data.payload.ma_line_data;

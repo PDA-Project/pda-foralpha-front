@@ -4,7 +4,7 @@ module.exports = app => {
     app.use('/proxy',
         createProxyMiddleware(
             {
-                target: 'http://test2.shinhan.site',
+                target: 'https://foralpha.shinhan.site',
                 changeOrigin: true,
             }
         )

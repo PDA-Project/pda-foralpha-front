@@ -124,10 +124,10 @@ function Signup2() {
   console.log(email);
 
   try {
-    const response = await axios.post('http://test2.shinhan.site/user-service/sign-in/email/validation', {
+    const response = await axios.post('https://foralpha.shinhan.site/user-service/sign-in/email/validation', {
        email: email
     });
-    // const response = await axios.get('http://test2.shinhan.site/user-service/');
+    // const response = await axios.get('https://foralpha.shinhan.site/user-service/');
     // console.log(response);
     if (response.status === 204) {
       console.log("hihi");
@@ -151,7 +151,7 @@ function Signup2() {
 const handleVerification = async () => {
   if (code) {
     try {
-      const response = await axios.post('http://test2.shinhan.site:8001/user-service/sign-in/email/verification', {
+      const response = await axios.post('https://foralpha.shinhan.site:8001/user-service/sign-in/email/verification', {
         email,
         verification_code: code,
       });
@@ -186,7 +186,7 @@ const handleSubmit = async (e) => {
 
   if (isValid) {
     try {
-      const response = await axios.post('http://test2.shinhan.site/user-service', {
+      const response = await axios.post('https://foralpha.shinhan.site/user-service', {
         email,
         nickname: name,
         password,

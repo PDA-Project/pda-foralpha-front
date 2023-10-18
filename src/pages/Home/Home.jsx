@@ -42,10 +42,10 @@ export const Home = () => {
     try {
       let homeData;
       if (selectedTab === "section1") {
-        const response = await axios.get("http://test2.shinhan.site/foralpha-service/home/trading-volumes");
+        const response = await axios.get("https://foralpha.shinhan.site/foralpha-service/home/trading-volumes");
         homeData = response.data.payload.trading_volumes;
       } else if (selectedTab === "section2") {
-        const response = await axios.get("http://test2.shinhan.site/foralpha-service/home/popular");
+        const response = await axios.get("https://foralpha.shinhan.site/foralpha-service/home/popular");
         homeData = response.data.payload.popularStocks;
         console.log(homeData);
       }

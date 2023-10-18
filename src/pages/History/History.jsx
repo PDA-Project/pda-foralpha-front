@@ -69,11 +69,11 @@ export const History = () => {
       let historyData;
       if (selectedTab === "section1") {
 
-        const response = await axios.get(`http://test2.shinhan.site/foralpha-service/history?user-uuid=${userUuid}`);
+        const response = await axios.get(`https://foralpha.shinhan.site/foralpha-service/history?user-uuid=${userUuid}`);
         historyData = response.data.payload.predictionHistory;
       } else if (selectedTab === "section2") {
 
-        const response = await axios.get(`http://test2.shinhan.site/foralpha-service/profile/history/quiz?user-uuid=${userUuid}`);
+        const response = await axios.get(`https://foralpha.shinhan.site/foralpha-service/profile/history/quiz?user-uuid=${userUuid}`);
         historyData = response.data.payload.quizHistory;
         console.log(historyData);
       }
