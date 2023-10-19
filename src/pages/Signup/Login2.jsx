@@ -42,9 +42,13 @@ export const Login2 = () => {
   };
   // 소셜 로그인
   const socialLoginHandler = (provider) => {
-    const SOCIAL_AUTH_URL = `http://test2.shinhan.site/oauth2/authorize/${provider}`;
+    console.log("provider:", provider);
+    
+    const SOCIAL_AUTH_URL = `${window.API_BASE_URL}/oauth2/authorize/${provider}`;
     window.location.href = SOCIAL_AUTH_URL;
+    console.log(window.location.href);
   };
+
   useEffect(() => {
     const pathname = location.pathname;
       if (pathname.includes('/login?error')) {
@@ -55,13 +59,18 @@ export const Login2 = () => {
           showCancelButton: false,
           confirmButtonText: "OK",
         });
+        
         navigate('/signup');
+
       } else if (pathname.includes('social-login')) {
         const Params = new URLSearchParams(location.search);
-        const isSocialLogin = Params.get("social-login") === "true";
-        navigate(isSocialLogin ? "/home" : "/signup");
+        const isSignedUp = Params.get("sign-up") === "true";
+        
+        navigate(isSignedUp ? "/home" : "/signup");
+      
       }
-  }, [location, navigate]);
+  }, [window.location.href, navigate]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isEmail && isPassword) {
