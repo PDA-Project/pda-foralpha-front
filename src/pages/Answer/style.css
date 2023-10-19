@@ -1,5 +1,4 @@
 .answer {
-    background-color: #ffffff;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -7,10 +6,14 @@
   }
   
   .answer .div-2 {
-    background-color: var(--neutrallightlightest);
-    height: 812px;
-    overflow: hidden;
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: 729px;
+    padding: 24px;
     position: relative;
+    top: 83px;
     width: 375px;
   }
   

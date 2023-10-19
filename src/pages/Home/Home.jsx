@@ -10,6 +10,7 @@ import { Icon8 } from "../../icons/Icon8";
 import { Icon9 } from "../../icons/Icon9";
 import { RightButton6 } from "../../icons/RightButton6";
 import { RightButton7 } from "../../icons/RightButton7";
+import Loading from "../../components/Loading/Loading";
 import axios from 'axios';
 import "./style.css";
 
@@ -17,6 +18,7 @@ export const Home = () => {
   const [selectedTab, setSelectedTab] = useState("section1"); // 초기 탭 "예측 내역"
   const [HomeData, setHomeData] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   function addCommasToNumber(number) {
     if (number !== undefined && number !== null) {
@@ -27,15 +29,24 @@ export const Home = () => {
   }
 
   useEffect(() => {
-    
-    fetchData(selectedTab);
-    // 5초(5000밀리초)마다 fetchData 함수 호출
-    const intervalId = setInterval(() => {
-      fetchData(selectedTab);
-    }, 5000);
-    // 컴포넌트가 언마운트될 때 clearInterval 호출하여 인터벌 정리
-    return () => clearInterval(intervalId);
+    setIsLoading(true);
+  
+    fetchData(selectedTab)
+      .then(() => {
+        setIsLoading(false);
+        // 5초(5000밀리초)마다 fetchData 함수 호출
+        const intervalId = setInterval(() => {
+          fetchData(selectedTab);
+        }, 5000);
+        // 컴포넌트가 언마운트될 때 clearInterval 호출하여 인터벌 정리
+        return () => clearInterval(intervalId);
+      })
+      .catch((error) => {
+        console.error("API 요청 실패:", error);
+        setIsLoading(false); // 에러 발생 시 로딩 숨김
+      });
   }, [selectedTab]);
+  
 
   const fetchData = async (selectedTab) => {
     try {
@@ -56,6 +67,7 @@ export const Home = () => {
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
+    setIsLoading(true);
     fetchData(tab);
   };
 
@@ -134,6 +146,12 @@ export const Home = () => {
             <TabBarItem className="tab-3" icon={<Link to="/profile" className="tab-3"><Icon10 className="icon-2" /></Link>} selected={false} title="Profile" />
           </div>
       </div>
+      {isLoading && (
+        <div className="spin">
+          <Loading />
+        </div>
+      )}
     </div>
+    
     );
   };

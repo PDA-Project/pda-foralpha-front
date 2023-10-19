@@ -10,6 +10,66 @@
     top: 100px;
 }
 
+.predict .stock-price-plus {
+    align-self: stretch;
+    color: var(--supporterrordark);
+    font-family: var(--heading-h3-font-family);
+    font-size: var(--heading-h3-font-size);
+    font-style: var(--heading-h3-font-style);
+    font-weight: var(--heading-h3-font-weight);
+    letter-spacing: var(--heading-h3-letter-spacing);
+    line-height: var(--heading-h3-line-height);
+    position: relative;
+    margin-right: 10px;
+    padding: 5px 10px;
+  }
+
+  .predict .stock-price-minus {
+    align-self: stretch;
+    color: var(--highlightdarkest);
+    font-family: var(--heading-h3-font-family);
+    font-size: var(--heading-h3-font-size);
+    font-style: var(--heading-h3-font-style);
+    font-weight: var(--heading-h3-font-weight);
+    letter-spacing: var(--heading-h3-letter-spacing);
+    line-height: var(--heading-h3-line-height);
+    position: relative;
+    margin-right: 10px;
+    padding: 5px 10px;
+  }
+
+  .predict .stock-change-plus {
+    align-self: stretch;
+    color: var(--supporterrordark);
+    font-family: var(--heading-h5-font-family);
+    font-size: var(--heading-h5-font-size);
+    font-style: var(--heading-h5-font-style);
+    font-weight: 500;
+    letter-spacing: var(--heading-h5-letter-spacing);
+    line-height: var(--heading-h5-line-height);
+    position: relative;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: var(--supporterrorlight);
+    padding: 5px 10px;
+  }
+
+  .predict .stock-change-minus {
+    align-self: stretch;
+    color: var(--highlightdarkest);
+    font-family: var(--heading-h5-font-family);
+    font-size: var(--heading-h5-font-size);
+    font-style: var(--heading-h5-font-style);
+    font-weight: 500;
+    letter-spacing: var(--heading-h5-letter-spacing);
+    line-height: var(--heading-h5-line-height);
+    position: relative;
+    margin-right: 10px;
+    border-radius: 5px;
+    background-color: var(--highlightlightest);
+    padding: 5px 10px;
+  }
+
 .stock-search .frame-6 {
     align-items: flex-start;
     display: flex;

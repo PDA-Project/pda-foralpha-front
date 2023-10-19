@@ -201,13 +201,9 @@ export const StockSearch = () => {
       {/* 클릭한 테마의 설명을 나타낼 부분 */}
       {selectedTheme && (
         <div className="theme-description">
-          {themes.description}
+          {themeDescription}
         </div>
       )}
-
-                {selectedTab === "section1" && searchError && (
-                    <p className="error-message">{searchError}</p>
-                )}
 
                 {isLoaded && selectedTab === "section1" && (
                     <div className="data-display">
@@ -216,7 +212,7 @@ export const StockSearch = () => {
                             <div key={index} className="data-item">
                                 <div className="result-name">{item.stock_name}</div>
                                 <div className="result-content">
-                                    <div className="result-price-plus">{addCommasToNumber(item.stock_price)}</div>
+                                <div className={`result-price-${item.stock_dod_percentage > 0 ? 'minus' : 'plus'}`}>{addCommasToNumber(item.stock_price)}</div>
                                     <div className="result-predict">1명이 상승을 예측했어요</div>
                             </div>
                             </div>

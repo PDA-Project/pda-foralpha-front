@@ -76,7 +76,7 @@
 
 .prediction .stock-field-instance {
   position: absolute;
-  top:200px
+  top:190px
 }
 
 .prediction .order-btn {
@@ -136,13 +136,15 @@
    border-radius: 3px;
    color: var(--neutrallightlight);
    position: absolute;
-   top: 250px;
+   top: 270px;
 }
   
 .prediction .text-field-instance {
   display: flex;
   position: absolute;
   top: 120px;
+  width: 100%;
+  justify-content: center;
 }
   .prediction .header {
     align-items: flex-start;
@@ -1170,8 +1172,8 @@
     position : absolute;
     width: 20px;
     height: 20px;
-    top: 15px;
-    right: 80px;
+    top: 12px;
+    right: 140px;
     margin: 0;
     color: var(--neutraldarklightest);
   }

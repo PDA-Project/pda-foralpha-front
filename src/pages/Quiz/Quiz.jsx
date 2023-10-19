@@ -8,8 +8,6 @@ import Swal from 'sweetalert2';
 import { TabBarItem } from "../../components/TabBarItem";
 import { ButtonPrimary } from "../../components/ButtonPrimary";
 import { NavBar } from "../../components/NavBar";
-import { Icon7 } from "../../icons/Icon7";
-import { Icon8 } from "../../icons/Icon8";
 import { Icon9 } from "../../icons/Icon9";
 import { Icon10 } from "../../icons/Icon10";
 import { Icon11 } from "../../icons/Icon11";
@@ -21,34 +19,26 @@ import { setQuizIid } from '../../actions'; // actions.js 파일 경로에 따�
 //import { setQuizIid } from '../../store/actions'; // 액션 함수 import
 import axios from "axios";
 import "./style.css";
-
-
 export const Quiz = () => {
   const [question, setQuestion] = useState("");
   const [parameterId, setParameterId] = useState(0);
   const [quizAnswer, setQuizAnswer] = useState(true);
   const [selectedAnswer, setSelectedAnswer] =useState(true);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   useEffect(() => {
     fetchQuestion();
   }, []);
-
   const fetchQuestion = async () => {
     try {
       // quiz 문제 조회
-      const response = await axios.get(`http://test2.shinhan.site/foralpha-service/point/quiz`);//(`${window.API_BASE_URL}/foralpha-service/point/quiz`);
+      const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/point/quiz`);//(`${window.API_BASE_URL}/foralpha-service/point/quiz`);
       const quizText = response.data.payload.quiz_question;
       const quizIid = response.data.payload.id;
-
       setQuestion(quizText);
       setParameterId(quizIid);
-
-      const response2 = await axios.get(`http://test2.shinhan.site/foralpha-service/point/quiz/answer?quizId=${quizIid}`);
+      const response2 = await axios.get(`${window.API_BASE_URL}/foralpha-service/point/quiz/answer?quizId=${quizIid}`);
       const quiz2Answer = response2.data.payload.quiz_answer; //정답 체크용
-
       setQuizAnswer(quiz2Answer);
       // 리덕스에 상태 저장
       dispatch(setQuizIid(quizIid)); // 이 부분을 추가합니다.
@@ -56,38 +46,21 @@ export const Quiz = () => {
       console.error("Failed to fetch question:", error);
     }
   };
-
   const handleButtonClick = async (choice) => {
-  
     console.log("로그입니다", choice); // choice 값 사용
-  
     try {
       const isCorrect = choice === quizAnswer;
       console.log(quizAnswer);
       console.log(parameterId);
-  
-      const quizData = {
-        quiz_id: parameterId,
-        user_id: "ca5f9cce-6caf-11ee-bde4-027e9aa2905c",
-        quizAnswer: choice,
-      };
-
-      
       console.log("----------------", parameterId);
-      
       //await axios.post(`http://test2.shinhan.site/foralpha-service/point/quiz`, quizData).then((response) => {
       //await axios.post(`https://foralpha.shinhan.site/foralpha-service/point/quiz`, quizData).then((response) => {
-       await axios.post(`https://foralpha.shinhan.site/foralpha-service/point/quiz?quiz_id=${parameterId}&user_id=ca5f9cce-6caf-11ee-bde4-027e9aa2905c&quizAnswer=${choice}`)
+      await axios.post(`${window.API_BASE_URL}/foralpha-service/point/quiz?quiz_id=${parameterId}&user_id=ca5f9cce-6caf-11ee-bde4-027e9aa2905c&quizAnswer=${choice}`)
         .then((response)=>{
-
         if (response.status === 200) {
             console.log("success");
           }
         });
-      
-
-      
-  
       if (isCorrect) {
         Swal.fire({
           text: "정답입니다!",
@@ -107,7 +80,6 @@ export const Quiz = () => {
       console.error("Failed to send user choice:", error);
     }
   };
-  
   return (
     <div className="quiz">
     <div className="div-2">
@@ -164,4 +136,4 @@ export const Quiz = () => {
     </div>
   </div>
   );
-};
+}

@@ -321,6 +321,11 @@
     padding: 5px 10px;
   }
 
+  .home .spin {
+    position: absolute;
+    top: 500px;
+  }
+
   .home .stock-change-plus {
     align-self: stretch;
     color: var(--supporterrordark);
