@@ -2,6 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Badge } from "../../components/Badge";
+import { TabBarItem } from "../../components/TabBarItem";
+import { Icon12 } from "../../icons/Icon12";
+import { Icon11 } from "../../icons/Icon11";
+import { Icon9 } from "../../icons/Icon9";
+import { Icon14 } from "../../icons/Icon14";
+import { Icon8 } from "../../icons/Icon8";
+import { Icon7 } from "../../icons/Icon7";
 import { Image } from "../../components/Image";
 import { NavBar } from "../../components/NavBar";
 import { Image5 } from "../../icons/Image5";
@@ -33,9 +40,6 @@ export const Card = () => {
             <div className="card" key={index}>
               <div className="events">
                 <div className="vertical-card">
-                  <div className="frame">
-                    <Image className="image-instance" icon={<Image5 className="icon-instance-node" />} />
-                  </div>
                   <div className="content">
                     <div className="title">
                       <div className="title-2">{cardItem.theme_name}</div>
@@ -58,6 +62,13 @@ export const Card = () => {
           rightControl="none"
           leftLink="/profile"
         />
+
+        <div className="tab-bar">
+          <TabBarItem className="tab-3" icon={<Link to="/home"><Icon11 className="icon-2" /></Link>} selected={false} title="Home" />
+          <TabBarItem className="tab-3" icon={<Link to="/point-home"><Icon8 className="icon-2" /></Link>} selected={false} title="Point" />
+          <TabBarItem className="tab-3" icon={<Link to="/feed"><Icon9 className="icon-2" /></Link>} selected={false} title="Feed" />
+          <TabBarItem className="tab-bar-item-instance" icon={<Link to="/profile"><Icon14 className="icon-2" /></Link>} selected={true} title="Profile" />
+      </div>
       </div>
     </div>
   );

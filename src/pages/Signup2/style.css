@@ -12,7 +12,7 @@
   width: 1759px;
 }
 
-.subtitle {
+.sign-up .subtitle {
   align-self: stretch;
   font-family: var(--heading-h5-font-family);
   font-size: var(--heading-h5-font-size);

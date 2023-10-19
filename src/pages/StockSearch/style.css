@@ -5,6 +5,11 @@
     width: 100%;
 }
 
+.stock-search .theme-list {
+    position: absolute;
+    top: 100px;
+}
+
 .stock-search .frame-6 {
     align-items: flex-start;
     display: flex;
@@ -150,6 +155,93 @@
     align-items: center;
   }
 
+.stock-search .text-field-instance-2 {
+    display: flex;
+    position: relative;
+    align-items: center;
+    overflow-y: scroll;
+  }
+
+.stock-search .data-display {
+    align-items: flex-start;
+    flex-direction: column;
+    height: 400px;
+    left: 2px;
+    overflow-y: scroll;
+    padding: 10px;
+    position: absolute;
+    top: 150px;
+    width: 375px;
+}
+
+.stock-search .result-name {
+    color: var(--neutraldarkdarkest);
+    font-family: var(--heading-h4-font-family);
+    font-size: var(--heading-h4-font-size);
+    font-style: var(--heading-h4-font-style);
+    font-weight: var(--heading-h4-font-weight);
+    letter-spacing: var(--heading-h4-letter-spacing);
+    line-height: var(--heading-h4-line-height);
+    position: relative;
+}
+
+.stock-search .result-price-plus {
+    align-self: stretch;
+    color: var(--supporterrordark);
+    font-family: var(--heading-h3-font-family);
+    font-size: var(--heading-h3-font-size);
+    font-style: var(--heading-h3-font-style);
+    font-weight: var(--heading-h3-font-weight);
+    letter-spacing: var(--heading-h3-letter-spacing);
+    line-height: var(--heading-h3-line-height);
+    position: relative;
+    margin-right: 10px;
+    padding: 5px 10px;
+}
+
+.stock-search .result-price-minus {
+    align-self: stretch;
+    color: var(--highlightdarkest);
+    font-family: var(--heading-h3-font-family);
+    font-size: var(--heading-h3-font-size);
+    font-style: var(--heading-h3-font-style);
+    font-weight: var(--heading-h3-font-weight);
+    letter-spacing: var(--heading-h3-letter-spacing);
+    line-height: var(--heading-h3-line-height);
+    position: relative;
+    margin-right: 10px;
+    padding: 5px 10px;
+  }
+
+  .stock-search .data-item {
+   display: flex; 
+   align-items: center;
+   justify-content: space-between;
+   height: 48px;
+  }
+
+  .stock-search .result-content {
+    display: flex;
+  }
+
+  .stock-search .result-predict {
+    align-self: stretch;
+    color: var(--light-ink);
+    font-family: var(--heading-h5-font-family);
+    font-size: var(--heading-h5-font-size);
+    font-style: var(--heading-h5-font-style);
+    font-weight: 500;
+    letter-spacing: var(--heading-h5-letter-spacing);
+    line-height: var(--heading-h5-line-height);
+    position: relative;
+    padding: 5px 10px;
+    background-color: var(--neutrallightmedium);
+    border-radius: 5px;
+  }
+
+  .stock-search .predict-count-bold {
+    font-weight: 700;
+  }
 
 .stock-search .input-field-stock {
     flex: 0 0 auto !important;
@@ -234,7 +326,6 @@
     display: flex;
     flex: 0 0 auto;
     gap: 12px;
-    overflow-x: scroll;
     position: relative;
     width: 100%;
 }
@@ -444,11 +535,49 @@
     flex-direction: column;
     gap: 12px;
     left: 0;
-    overflow-y: scroll;
     padding: 24px;
     position: absolute;
     top: 100px;
     width: 375px;
+}
+
+.data-display::-webkit-scrollbar {
+    width: 7px
+  }
+  
+  .data-display::-webkit-scrollbar-thumb {
+    height: 20%;
+    background: var(--highlightlightest);
+    border-radius: 10px;
+  }
+  
+  .data-display::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .05);
+  }
+
+  .text-field-instance-2::-webkit-scrollbar {
+    width: 7px
+  }
+  
+  .text-field-instance-2::-webkit-scrollbar-thumb {
+    height: 20%;
+    background: var(--highlightlightest);
+    border-radius: 10px;
+  }
+  
+  .text-field-instance-2::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .05);
+  }
+
+.stock-search .error-message {
+    text-align: center;
+    color: var(--neutraldarklight);
+    font-family: var(--body-body-m-font-family);
+    font-size: var(--body-body-m-font-size);
+    font-style: var(--body-body-m-font-style);
+    font-weight: var(--body-body-m-font-weight);
+    letter-spacing: var(--body-body-m-letter-spacing);
+    line-height: var(--body-body-m-line-height);
 }
 
 .stock-search .chips-wrapper {
@@ -460,7 +589,6 @@
     gap: 16px;
     position: relative;
     width: 100%;
-    overflow-y: scroll;
     height: 500px;
 }
 
@@ -471,6 +599,7 @@
     flex-direction: column;
     gap: 8px;
     position: relative;
+    height: 500px;
 }
 
 .stock-search .list-item-instance {

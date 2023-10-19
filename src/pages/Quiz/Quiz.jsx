@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import { TabBarItem } from "../../components/TabBarItem";
 import { ButtonPrimary } from "../../components/ButtonPrimary";
 import { NavBar } from "../../components/NavBar";
+import { Icon7 } from "../../icons/Icon7";
+import { Icon8 } from "../../icons/Icon8";
 import { Icon9 } from "../../icons/Icon9";
 import { Icon10 } from "../../icons/Icon10";
 import { Icon11 } from "../../icons/Icon11";

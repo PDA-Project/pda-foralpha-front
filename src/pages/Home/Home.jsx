@@ -110,7 +110,7 @@ export const Home = () => {
                   <div className="title-3">{item.stock_name}</div>
                 </div>
                 <div className="content-1">
-                <div className={`stock-price ${item.stock_dod_percentage > 0 ? 'stock-price-plus' : 'stock-price-minus'}`}>{addCommasToNumber(item.stock_present_price)}</div>
+                <div className={`stock-price ${item.stock_dod_percentage > 0 ? 'stock-price-plus' : 'stock-price-minus'}`}>{addCommasToNumber(item.stock_price)}</div>
                 <div className="predict-count"><span className="predict-count-bold">{item.predict_count}</span>명이 상승을 예측했어요</div>
               </div>
               </div>

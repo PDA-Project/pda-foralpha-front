@@ -35,7 +35,7 @@
     flex-direction: column;
     gap: 16px;
     position: relative;
-    width: 100%;
+    width: 170px;
   }
   
   .card .events {

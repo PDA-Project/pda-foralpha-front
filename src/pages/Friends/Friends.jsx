@@ -12,24 +12,55 @@ import { BiSearch} from 'react-icons/bi';
 import { RightButton7 } from "../../icons/RightButton7";
 import axios from "axios";
 import "./style.css";
+import Swal from "sweetalert2";
 
 export const Friends = () => {
     const [friendname, setFriendName] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [searchError, setSearchError] = useState(null);
+
+    const fetchData = async (name) => {
+      if (name.trim() === "") {
+          setSearchResults([]);
+          setIsLoaded(true);
+          setSearchError("닉네임을 입력해주세요");
+      } else {
+          try {
+              const response = await axios.get(
+                  `${window.API_BASE_URL}/foralpha-service/friends/search?nickname=${friendname}&user-id=ca5f9e53-6caf-11ee-bde4-027e9aa2905c&page=0&size=10`
+              );
+              const jsonData = response.data.payload.user_nickname;
+              setSearchResults(jsonData);
+              setIsLoaded(true);
+              setSearchError(null);
+              console.log(jsonData);
+          } catch (error) {
+              console.error("API 요청 실패:", error);
+              setSearchResults([]);
+              setIsLoaded(true);
+              setSearchError("검색 결과가 없습니다.");
+          }
+      }
+  };
 
   const handleSearch = async () => {
-    try {
-      const response = await axios.get(`/search?name=${friendname}`);
-
-      if (response.ok) {
-        const data = await response.json();
-        setSearchResults(data);
-      } else {
-        console.error("검색 요청이 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("오류 발생:", error);
+    if (friendname === "") {
+        setSearchError("닉네임을 입력해주세요");
+        setSearchResults([]);
+        setIsLoaded(false);
+        Swal.fire({
+            text: "닉네임을 입력해주세요",
+            icon: "error",
+            timer: 2000,
+          });
+    } else {
+        fetchData(friendname);
     }
+  };
+
+  const clickSearch = async () => {
+    handleSearch();
   };
 
   return (
@@ -55,22 +86,27 @@ export const Friends = () => {
                     }
                     }}
                     placeholder="닉네임" />
-                <BiSearch className="searchbar-icon" onClick={handleSearch} />
+                <BiSearch className="searchbar-icon" onClick={clickSearch} />
             </div>
             <div className="friends">
-                {searchResults.map((result, index) => (
+            {searchResults && searchResults.length > 0 ? (
+                searchResults.map((result, index) => (
                 <ListItem
-                key={index}
-                className="list-item-5"
-                controls="icon"
-                divClassName="list-item-4"
-                icon={<Avatar9 className="avatar-15" />}
-                override={<RightButton7 className="right-button-6" />}
-                showDescription={false}
-                title={result.nickname}
-                visuals="avatar"
+                    key={index}
+                    className="list-item-5"
+                    controls="icon"
+                    divClassName="list-item-4"
+                    icon={<Avatar9 className="avatar-15" />}
+                    override={<RightButton7 className="right-button-6" />}
+                    showDescription={false}
+                    title={result.nickname}
+                    visuals="avatar"
                 />
-            ))}
+                ))
+            ) : (
+                <p className="error-message">존재하지 않는 사용자입니다.</p>
+            )}
+            </div>
             </div>
             <div className="tab-bar">
               <TabBarItem className="tab-3" icon={<Link to="/home"><Icon11 className="icon-2" /></Link>} selected={false} title="Home" />
@@ -79,6 +115,5 @@ export const Friends = () => {
               <TabBarItem className="tab-3" icon={<Link to="/profile"><Icon10 className="icon-2" /></Link>} selected={false} title="Profile" />
           </div>
         </div>
-    </div>
   )
 };

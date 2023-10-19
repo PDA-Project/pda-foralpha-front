@@ -9,6 +9,7 @@ import { Avatar9 } from "../../icons/Avatar9";
 import { Icon12 } from "../../icons/Icon12";
 import { Icon11 } from "../../icons/Icon11";
 import { Icon10 } from "../../icons/Icon10";
+import { Icon13 } from "../../icons/Icon13";
 import { Icon8 } from "../../icons/Icon8";
 import { Icon9 } from "../../icons/Icon9";
 import { Icon7 } from "../../icons/Icon7";
@@ -22,6 +23,15 @@ import "./style.css";
 export const Feed = () => {
   const [feedData, setFeedData] = useState([]);
   useEffect(() => {
+// <<<<<<< please
+//     const userUuid = "ca5f9db2-6caf-11ee-bde4-027e9aa2905c"; // 실제로는 동적으로 설정해야 합니다.
+//     fetchFeed(userUuid);
+//   }, []);
+
+//   const fetchFeed = async (userUuid) => {
+//     try {
+//       const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/feed?user-uuid=${userUuid}`);
+
     const userUuid = sessionStorage.getItem("userUUID");
     fetchFeed(userUuid);
   }, []);
@@ -34,6 +44,7 @@ export const Feed = () => {
         console.error(response.error.message);
         return;
       }
+
       const feedData = response.data.payload.friendPredictions;
       setFeedData(feedData);
       console.log("Feed loaded");
@@ -41,6 +52,7 @@ export const Feed = () => {
       console.error("Failed to fetch feed:", error);
     }
   };
+
   return (
     <div className="feed">
       <div className="div-2">
@@ -74,10 +86,10 @@ export const Feed = () => {
             ))}
         </div>
         <div className="tab-bar">
-              <TabBarItem className="tab-3" icon={<Icon11 className="icon-2" />} selected={false} title="Home" />
-              <TabBarItem className="tab-3" icon={<Icon8 className="icon-2" />} selected={false} title="Point" />
-              <TabBarItem className="tab-3" icon={<Icon12 className="icon-2" />} selected={false} title="Feed" />
-              <TabBarItem className="tab-3" icon={<Icon10 className="icon-2" />} selected={false} title="Profile" />
+              <TabBarItem className="tab-3" icon={<Link to="/home"><Icon11 className="icon-3" /></Link>} selected={false} title="Home" />
+              <TabBarItem className="tab-3" icon={<Link to="/point-home"><Icon8 className="icon-3" /></Link>} selected tabNameClassName="tab-2" title="Point"/>
+              <TabBarItem className="tab-bar-item-instance" icon={<Link to="/feed"><Icon12 className="icon-2" /></Link>} selected={true} title="Feed" />
+              <TabBarItem className="tab-3" icon={<Link to="/profile"><Icon10 className="icon-3" /></Link>} selected={false} title="Profile" />
         </div>
       </div>
     </div>

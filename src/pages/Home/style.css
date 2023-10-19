@@ -377,19 +377,18 @@
 
   }
 
-  /* 아래의 모든 코드는 영역::코드로 사용 */
 .list::-webkit-scrollbar {
-  width: 7px;  /* 스크롤바의 너비 */
+  width: 7px
 }
 
 .list::-webkit-scrollbar-thumb {
-  height: 20%; /* 스크롤바의 길이 */
-  background: var(--highlightlightest); /* 스크롤바의 색상 */
+  height: 20%;
+  background: var(--highlightlightest);
   border-radius: 10px;
 }
 
 .list::-webkit-scrollbar-track {
-  background: rgba(33, 122, 244, .05);  /*스크롤바 뒷 배경 색상*/
+  background: rgba(33, 122, 244, .05);
 }
   
   .home .content-3 {
