@@ -8,6 +8,7 @@ import { Icon8 } from "../../icons/Icon8";
 import { Icon9 } from "../../icons/Icon9";
 import { Icon14 } from "../../icons/Icon14";
 import { LeftButton } from "../../icons/LeftButton";
+import styled from "styled-components";
 import ReactApexChart from "react-apexcharts";
 import axios from "axios";
 import "./style.css";
@@ -15,49 +16,20 @@ import "./style.css";
 export const History = () => {
   const [selectedTab, setSelectedTab] = useState("section1"); // 초기 탭 "예측 내역"
   const [HistoryData, setHistoryData] = useState([]);
-  const donutData = {
-    series: [50,40,30,10,0],
+  const [HistoryType, setHistoryType] = useState([]);
+  const [themeList, setThemeList] = useState([]);
+  const [themeCount, setThemeCount] = useState([]);
+  const [maxCountTheme, setMaxCountTheme] = useState('');
+  const [maxCount, setMaxCount] = useState(0);
+  const [donutChart, setDonutChart] = useState({
+    series: [], // 빈 배열 또는 기본 데이터를 여기에 설정할 수 있음
     options: {
       chart: {
         type: 'donut',
       },
-      legend: {
-        position: 'bottom'
-      },
-      responsive: [{
-        breakpoint: 480,
-      }],
-      plotOptions: {
-        pie: {
-          donut: {
-            size: "70%",
-            labels: {
-              show: true,
-              total: {
-                showAlways: true,
-                show: true,
-                label: 'THEME',
-                fontSize: '12px',
-              },
-              value: {
-                fontSize: '22px',
-                show: true,
-              },
-            },
-          }
-        }
-      },
-      labels: ["금융", "IT", "화학", "유통", "반도체"],
-      title: {
-        text: '내가 주로 성공한 종목은?',
-        align: 'center'
-      },
-      fill: {
-        opacity: 1,
-        colors: ["#0066FF", "#7AFFBF", "#00D1FF"],
-      },
+      // 나머지 옵션들을 추가하세요
     },
-  }
+  });
 
   useEffect(() => {
     const userUuid = sessionStorage.getItem("userUUID");
@@ -67,13 +39,98 @@ export const History = () => {
   const fetchHistory = async (selectedTab, userUuid) => {
     try {
       let historyData;
-      if (selectedTab === "section1") {
+      let typeData;
+      const TypeResponse = await axios.get(`${window.API_BASE_URL}/foralpha-service/profiles/profile?user-uuid=${userUuid}`);
+      typeData = TypeResponse.data.payload.profile.user_invest_type;
+      const themeCardListResponse = await axios.get(`${window.API_BASE_URL}/foralpha-service/profile/theme-card?user-uuid=${userUuid}`);
+      const themeCardList = themeCardListResponse.data.payload.themeCardList;
+      console.log(typeData);
+      console.log(themeCardList);
 
-        const response = await axios.get(`http://test2.shinhan.site/foralpha-service/history?user-uuid=${userUuid}`);
+      if (themeCardList) {
+        const themes = [];
+        const counts = [];
+        let maxCountTheme = '';
+        let maxCount = 0;
+
+        themeCardList.forEach(theme => {
+          themes.push(theme.theme_name);
+          counts.push(theme.theme_count);
+
+          if (theme.theme_count > maxCount) {
+            maxCount = theme.theme_count;
+            maxCountTheme = theme.theme_name;
+          }
+        });
+
+        setMaxCount(maxCount);
+        setMaxCountTheme(maxCountTheme);
+
+        const donutData = {
+          series: counts,
+          options: {
+            chart: {
+              type: 'donut',
+            },
+            legend: {
+              position: 'bottom'
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            responsive: [{
+              breakpoint: 480,
+            }],
+            plotOptions: {
+              pie: {
+                donut: {
+                  size: "90%",
+                  labels: {
+                    show: false,
+                    total: {
+                      showAlways: true,
+                      show: true,
+                      label: 'THEME',
+                      fontSize: '12px',
+                    },
+                    value: {
+                      fontSize: '22px',
+                      show: true,
+                    },
+                  },
+                }
+              }
+            },
+            labels: themes, // 테마 이름을 설정
+            title: {
+              text: '내가 주로 성공한 종목은?',
+              align: 'center'
+            },
+            fill: {
+              opacity: 1,
+              colors: ["#0066FF", "#7AFFBF", "#00D1FF"],
+            },
+          },
+        };
+
+        setDonutChart(donutData);
+      }
+
+      if(typeData === "중립형") {
+        typeData = "주식 컬렉터형";
+      } else if(typeData === "집중투자형") {
+        typeData = "집중 몰빵형";
+      } else {
+        typeData = "분산 투자형";
+      }
+      
+      setHistoryType(typeData);
+
+      if (selectedTab === "section1") {
+        const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/history?user-uuid=${userUuid}`);
         historyData = response.data.payload.predictionHistory;
       } else if (selectedTab === "section2") {
-
-        const response = await axios.get(`http://test2.shinhan.site/foralpha-service/profile/history/quiz?user-uuid=${userUuid}`);
+        const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/profile/history/quiz?user-uuid=${userUuid}`);
         historyData = response.data.payload.quizHistory;
         console.log(historyData);
       }
@@ -88,6 +145,27 @@ export const History = () => {
     const userUuid = sessionStorage.getItem("userUUID");
     fetchHistory(tab, userUuid);
   };
+  
+  function getPostposition(str) {
+    if (!str) {
+      return ''; // 빈 문자열 또는 다른 처리를 원하는 값으로 변경
+    }
+    const lastChar = str.charCodeAt(str.length - 1);
+    // 한글 유니코드 범위: 가(0xAC00) ~ 힣(0xD7A3)
+    const isKorean = lastChar >= 0xAC00 && lastChar <= 0xD7A3;
+    // 받침이 있는지 여부에 따라 조사 선택
+    return isKorean ? (lastChar % 28 > 0 ? '으로' : '로') : '로';
+  }
+
+  function addPlusIfPositive(inputString) {
+    const numberValue = parseFloat(inputString);
+    
+    if (!isNaN(numberValue) && numberValue > 0) {
+        return '+' + inputString;
+    } else {
+        return inputString;
+    }
+}
 
   function getPostposition(str) {
     if (!str) {
@@ -124,17 +202,28 @@ export const History = () => {
         <div className="comment">
           <div className="frame">
             <div className="div-wrapper">
-              <p className="text-wrapper">편식 없이 골고루 투자하는 ‘균형파&#39;</p>
+              <p className="text-wrapper">나의 투자 성향은 &#39;{HistoryType}&#39;</p>
             </div>
             <div className="donut-chart">
                 <ReactApexChart
-                    options={donutData.options}
-                    series={donutData.series}
+                    options={donutChart.options}
+                    series={donutChart.series}
                     type="donut"
                     width="300"
                 />
+                {donutChart.series.length === 0 ? (
+                  <ReactApexChart
+                  options={donutChart.options}
+                  series={[1, 1, 1]}
+                  type="donut"
+                  width="300"
+                />
+              ) : null}
             </div>
-            <div className="chart-info">
+            <div className="chart-info">           
+              <div className="chart-info-title">성공률 1위</div>
+              <div className="chart-desc">{maxCountTheme}</div>
+              <div className="chart-desc">{maxCount}개</div>
             </div>
           </div>
           <img
@@ -154,14 +243,16 @@ export const History = () => {
                 <div className="content">
                   <p className="title">
                     <span className="span">{item.created_at}-{item.end_day} </span>
-                    <span className="text-wrapper-2">{item.earned_point}Point</span>
+                    <span className="text-wrapper-2">{addPlusIfPositive(item.earned_point)}Point</span>
                   </p>
                   <p className="description">
                     <span className="text-wrapper-3">{item.stock_name}</span>
                     <span className="text-wrapper-4">{getPostposition(item.stock_name)} </span>
+
                     {/* 여기서 item.yaxis가 있는지 확인 후 접근 */}
                     <span className="text-wrapper-5" style={{ color: item.yaxis && item.yaxis <= 0 ? 'var(--highlightdarkest)' : 'var(--supporterrordark)' }}>
-                      {item.stock_returns}%
+                      {addPlusIfPositive(item.stock_returns)}%
+
                     </span>
                     <span className="text-wrapper-4">를 달성했어요.</span>
                   </p>
@@ -177,7 +268,7 @@ export const History = () => {
                 <div className="content">
                   <p className="title">
                     <span className="span">{item.created_at} </span>
-                    <span className="text-wrapper-2">{item.quiz_point}Point</span>
+                    <span className="text-wrapper-2">{addPlusIfPositive(item.quiz_point)}Point</span>
                   </p>
                   <p className="description">
                     <span className="text-wrapper-3">{item.quiz_question}</span>

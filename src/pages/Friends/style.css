@@ -16,6 +16,17 @@
     top: 83px;
     width: 375px;
 }
+
+.search-friends .error-message {
+    text-align: center;
+    color: var(--neutraldarklight);
+    font-family: var(--body-body-m-font-family);
+    font-size: var(--body-body-m-font-size);
+    font-style: var(--body-body-m-font-style);
+    font-weight: var(--body-body-m-font-weight);
+    letter-spacing: var(--body-body-m-letter-spacing);
+    line-height: var(--body-body-m-line-height);
+}
   
   .searchFriends .header {
     background-color: var(--neutrallightlight);
@@ -394,7 +405,7 @@
   
   .searchFriends .input-field-stock {
     flex: 0 0 auto !important;
-    width: 200px !important;
+    width: 300px !important;
     flex-direction: column;
     color: var(--neutraldarklightest);
     font-family: var(--body-body-m-font-family);

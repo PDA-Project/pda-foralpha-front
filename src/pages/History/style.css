@@ -14,6 +14,20 @@
     width: 375px;
   }
   
+  .history::-webkit-scrollbar {
+    width: 7px;
+  }
+  
+  .history::-webkit-scrollbar-thumb {
+    height: 20%;
+    background: var(--highlightlightest);
+    border-radius: 10px;
+  }
+  
+  .history::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .05);
+  }
+
   .history .nav-bar-instance {
     left: 0 !important;
     position: absolute !important;
@@ -88,6 +102,33 @@
     position: relative;
     text-align: center;
   }
+
+  .history .chart-info {
+    text-align: center;
+    position: absolute;
+    top: 145px;
+    left: 160px;
+    font-family: var(--heading-h4-font-family);
+    font-size: var(--heading-h4-font-size);
+    font-style: var(--heading-h4-font-style);
+    font-weight: 500;
+    letter-spacing: var(--heading-h4-letter-spacing);
+    line-height: var(--heading-h4-line-height);
+  }
+
+  .history .chart-info-title {
+    font-weight: var(--heading-h4-font-weight);
+  }
+
+  .history .no-data-message {
+    text-align: center;
+    font-family: var(--heading-h5-font-family);
+    font-size: var(--heading-h5-font-size);
+    font-style: var(--heading-h5-font-style);
+    font-weight: var(--heading-h5-font-weight);
+    letter-spacing: var(--heading-h5-letter-spacing);
+    line-height: var(--heading-h5-line-height);
+  }
   
   .history .divider-3 {
     height: 1px;
@@ -129,9 +170,7 @@
     align-items: flex-start;
     display: flex;
     flex-direction: column;
-    height: 493px;
     left: 2px;
-    overflow-y: scroll;
     padding: 10px;
     position: absolute;
     top: 190px;
@@ -145,11 +184,12 @@
     flex: 0 0 auto;
     gap: 16px;
     padding: 16px 0px;
-    position: absolute;
+    position: relative;
     top: 270px;
-    width: 375px;
     flex-direction: column;
     text-align: left;
+    height: 200px;
+    overflow-y: scroll;
   }
 
   
@@ -161,7 +201,7 @@
     flex-grow: 1;
     gap: 4px;
     position: relative;
-    width: 375px;
+    width: 95%;
   }
   
   .history .title {

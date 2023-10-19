@@ -62,6 +62,9 @@ export const Login = () => {
       }
   }, [location, navigate]);
   const handleSubmit = async (e) => {
+
+  
+
     e.preventDefault();
     if (isEmail && isPassword) {
       try {
@@ -78,6 +81,7 @@ export const Login = () => {
         const data = response.data.payload;
         if (data && data.user_id) {
           sessionStorage.setItem("userUUID", data.user_id);
+
           console.log("로그인 성공:", data);
           navigate("/home");
         } else {
