@@ -70,12 +70,13 @@ function Signup2() {
   const onChangePasswordConfirm = (e) => {
     const currentPasswordConfirm = e.target.value;
     setPasswordConfirm(currentPasswordConfirm);
-    if (password !== currentPasswordConfirm) {
-      setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
-      setIsPasswordConfirm(false);
-    } else {
+    if (password == currentPasswordConfirm) {
       setPasswordConfirmMessage("비밀번호가 일치합니다.");
       setIsPasswordConfirm(true);
+    } else {
+      setPasswordConfirmMessage("비밀번호가 일치하지 않습니다.");
+      setIsPasswordConfirm(false);
+      
     }
   };
 
@@ -124,10 +125,10 @@ function Signup2() {
   console.log(email);
 
   try {
-    const response = await axios.post('http://test2.shinhan.site/user-service/sign-in/email/validation', {
+    const response = await axios.post(`${window.API_BASE_URL}/user-service/sign-in/email/validation`, {
        email: email
     });
-    // const response = await axios.get('http://test2.shinhan.site/user-service/');
+    // const response = await axios.get(`${window.API_BASE_URL}/user-service/`);
     // console.log(response);
     if (response.status === 204) {
       console.log("hihi");
@@ -149,14 +150,17 @@ function Signup2() {
 
 // 인증 코드 확인
 const handleVerification = async () => {
+  console.log(code);
+  console.log(email);
   if (code) {
+    console.log(code);
     try {
-      const response = await axios.post('http://test2.shinhan.site/user-service/sign-in/email/verification', {
+      console.log(code);
+      const response = await axios.post(`${window.API_BASE_URL}/user-service/sign-in/email/verification`, {
         email,
         verification_code: code,
       });
-
-      if (response.status === 200) {
+      if (response.status === 204) {
         setCodeMessage('인증이 완료되었습니다.');
         setIsVerification(true);
       } else {
@@ -186,7 +190,7 @@ const handleSubmit = async (e) => {
 
   if (isValid) {
     try {
-      const response = await axios.post('http://test2.shinhan.site/user-service', {
+      const response = await axios.post(`${window.API_BASE_URL}/user-service`, {
         email,
         nickname: name,
         password,

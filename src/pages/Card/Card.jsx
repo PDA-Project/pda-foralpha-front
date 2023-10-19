@@ -12,12 +12,12 @@ import "./style.css";
 export const Card = () => {
   const [CardData, setCardData] = useState([]);
   useEffect(() => {
-    const userUuid = "ca5f9d44-6caf-11ee-bde4-027e9aa2905c";
+    const userUuid = sessionStorage.getItem("userUUID");
     fetchCard(userUuid);
   }, []);
   const fetchCard = async (userUuid) => {
     try {
-      const response = await axios.get(`http://test2.shinhan.site/foralpha-service/profile/theme-card?user-uuid=${userUuid}`)
+      const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/profile/theme-card?user-uuid=${userUuid}`)
       const cardData = response.data.payload.themeCardList;
       setCardData(cardData);
       console.log("Feed loaded");

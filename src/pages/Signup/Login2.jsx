@@ -6,7 +6,9 @@ import Swal from "sweetalert2";
 import "./style.css";
 import "../../styles/styleguide.css";
 import axios from 'axios';
-export const Login = () => {
+
+
+export const Login2 = () => {
   // 초기값
   const [password, setPassword] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -43,7 +45,6 @@ export const Login = () => {
     const SOCIAL_AUTH_URL = `http://test2.shinhan.site/oauth2/authorize/${provider}`;
     window.location.href = SOCIAL_AUTH_URL;
   };
-  
   useEffect(() => {
     const pathname = location.pathname;
       if (pathname.includes('/login?error')) {
@@ -65,16 +66,11 @@ export const Login = () => {
     e.preventDefault();
     if (isEmail && isPassword) {
       try {
-        const response = await axios.post(
-          `${window.API_BASE_URL}/user-service/login/`,
-          {
-            data: {
-              email,
-              password,
-            },
-          }
-        );
-        console.log("Response Data:", response.data);
+        const response = await axios.post(`${window.API_BASE_URL}/user-service/login`, {
+          email,
+          password,
+        });
+        console.log("Response Data:", response.data.payload);
         const data = response.data.payload;
         if (data && data.user_id) {
           sessionStorage.setItem("userUUID", data.user_id);

@@ -60,7 +60,7 @@ export const History = () => {
   }
 
   useEffect(() => {
-    const userUuid = "ca5f9cce-6caf-11ee-bde4-027e9aa2905c";
+    const userUuid = sessionStorage.getItem("userUUID");
     fetchHistory(selectedTab, userUuid);
   }, [selectedTab]);
 
@@ -85,9 +85,22 @@ export const History = () => {
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
-    const userUuid = "ca5f9cce-6caf-11ee-bde4-027e9aa2905c";
+    const userUuid = sessionStorage.getItem("userUUID");
     fetchHistory(tab, userUuid);
   };
+
+  function getPostposition(str) {
+    if (!str) {
+      return ''; // 빈 문자열 또는 다른 처리를 원하는 값으로 변경
+    }
+    const lastChar = str.charCodeAt(str.length - 1);
+  
+    // 한글 유니코드 범위: 가(0xAC00) ~ 힣(0xD7A3)
+    const isKorean = lastChar >= 0xAC00 && lastChar <= 0xD7A3;
+  
+    // 받침이 있는지 여부에 따라 조사 선택
+    return isKorean ? (lastChar % 28 > 0 ? '으로' : '로') : '로';
+  }
 
   return (
     <div className="history">
@@ -134,7 +147,7 @@ export const History = () => {
           </div>
         </div>
         <div className="list">
-        {selectedTab === "section1" && HistoryData && HistoryData.length > 0 &&(
+        {selectedTab === "section1" && HistoryData && HistoryData.length > 0 && (
           <div className="list-item">
             {HistoryData.map((item, index) => (
               <div key={index} className="content">
@@ -145,8 +158,11 @@ export const History = () => {
                   </p>
                   <p className="description">
                     <span className="text-wrapper-3">{item.stock_name}</span>
-                    <span className="text-wrapper-4">로 </span>
-                    <span className="text-wrapper-5" style={{ color: item.stock_returns <= 0 ? 'var(--highlightdarkest)' : 'var(--supporterrordark)' }}>{item.stock_returns}%</span>
+                    <span className="text-wrapper-4">{getPostposition(item.stock_name)} </span>
+                    {/* 여기서 item.yaxis가 있는지 확인 후 접근 */}
+                    <span className="text-wrapper-5" style={{ color: item.yaxis && item.yaxis <= 0 ? 'var(--highlightdarkest)' : 'var(--supporterrordark)' }}>
+                      {item.stock_returns}%
+                    </span>
                     <span className="text-wrapper-4">를 달성했어요.</span>
                   </p>
                 </div>
