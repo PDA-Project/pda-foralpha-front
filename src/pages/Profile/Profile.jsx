@@ -17,13 +17,13 @@ export const Profile = () => {
   const [ProfileData, setProfileData] = useState([]);
 
   useEffect(() => {
-    const userUuid = "ca5f9c68-6caf-11ee-bde4-027e9aa2905c"; // 실제로는 동적으로 설정해야 합니다.
+    const userUuid = sessionStorage.getItem("userUUID");
     fetchProfile(userUuid);
   }, []);
 
   const fetchProfile = async (userUuid) => {
     try {
-      const response = await axios.get(`http://test2.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`);//(`http://localhost:8002/feed?user-uuid=${userUuid}`)//(`http://test2.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`)//(`http://test2.shinhan.site/foralpha-service/profiles/profile?user-uuid=${userUuid}`);
+      const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/profiles/profile?user-uuid=${userUuid}`);
       const profileData = response.data.payload.profile;
       setProfileData(profileData);
       console.log("Feed loaded");
@@ -39,15 +39,15 @@ export const Profile = () => {
           <div className="profile-info">
             <div className="avatar-2" />
             <div className="name">
-              <div className="text-wrapper">플리</div>
+              <div className="text-wrapper">{ProfileData.nickname}</div>
               <p className="p">
-                <span className="span">친구</span>
+                <span className="span">{ProfileData.friend_count}</span>
                 <span className="text-wrapper-2">&nbsp;</span>
-                <span className="text-wrapper-3">5</span>
+                <span className="text-wrapper-3">{ProfileData.user_invest_type}</span>
               </p>
               <p className="p">
                 <span className="span">포인트 </span>
-                <span className="text-wrapper-3">120Point</span>
+                <span className="text-wrapper-3">{ProfileData.total_point}</span>
               </p>
             </div>
           </div>

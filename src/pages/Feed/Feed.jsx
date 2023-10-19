@@ -11,6 +11,7 @@ import { Icon11 } from "../../icons/Icon11";
 import { Icon10 } from "../../icons/Icon10";
 import { Icon13 } from "../../icons/Icon13";
 import { Icon8 } from "../../icons/Icon8";
+import { Icon9 } from "../../icons/Icon9";
 import { Icon7 } from "../../icons/Icon7";
 import { Add } from "../../icons/Add";
 import { RightButton3 } from "../../icons/RightButton3";
@@ -19,18 +20,31 @@ import { RightButton7 } from "../../icons/RightButton7";
 import { Search4 } from "../../icons/Search4";
 import axios from 'axios';
 import "./style.css";
-
 export const Feed = () => {
   const [feedData, setFeedData] = useState([]);
-
   useEffect(() => {
-    const userUuid = "ca5f9db2-6caf-11ee-bde4-027e9aa2905c"; // 실제로는 동적으로 설정해야 합니다.
+// <<<<<<< please
+//     const userUuid = "ca5f9db2-6caf-11ee-bde4-027e9aa2905c"; // 실제로는 동적으로 설정해야 합니다.
+//     fetchFeed(userUuid);
+//   }, []);
+
+//   const fetchFeed = async (userUuid) => {
+//     try {
+//       const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/feed?user-uuid=${userUuid}`);
+
+    const userUuid = sessionStorage.getItem("userUUID");
     fetchFeed(userUuid);
   }, []);
-
   const fetchFeed = async (userUuid) => {
     try {
       const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/feed?user-uuid=${userUuid}`);
+      
+      if(response.status!==200){
+        console.log(response.error.message);
+        console.error(response.error.message);
+        return;
+      }
+
       const feedData = response.data.payload.friendPredictions;
       setFeedData(feedData);
       console.log("Feed loaded");
@@ -38,7 +52,7 @@ export const Feed = () => {
       console.error("Failed to fetch feed:", error);
     }
   };
-  
+
   return (
     <div className="feed">
       <div className="div-2">
