@@ -11,28 +11,12 @@ import { Icon9 } from "../../icons/Icon9";
 import { LeftButton } from "../../icons/LeftButton";
 import "./style.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
 
 export const Answer = () => {
-  const quizIid = useSelector((state) => state.quiz.quizIid);
-  console.log(quizIid);
-  const [answerData, setAnswerData] = useState([]);
-  useEffect(() => {
-    if (quizIid) {
-      fetchAnswer(quizIid);
-    }
-  }, [quizIid]);
-  const fetchAnswer = async (quizIid) => {
-    try {
-      const response = await axios.get(`${window.API_BASE_URL}/foralpha-service/point/quiz/answer?quizId=${quizIid}`)//(`${window.API_BASE_URL}/foralpha-service/point/quiz/answer?quizId=${quizIid}`);
-      const answerData = response.data.payload;
-      setAnswerData(answerData);
-      console.log("Answer Boolean : "+answerData.quiz_answer);
-      console.log("Answer loaded");
-    } catch (error) {
-      console.error("Failed to fetch answer:", error);
-    }
-  };
+  const quizText = useSelector((state) => state.quiz.quizText) 
+  const quizAnswer = useSelector((state) => state.quiz.quizAnswer);
+  const quizExplanation = useSelector((state) => state.quiz.quizExplanation);
+
   return (
     <div className="answer">
       <div className="div-2">
@@ -58,7 +42,7 @@ export const Answer = () => {
                     showButton={false}
                     showDescription={false}
                     showTitle={false}
-                    subtitle={answerData.quiz_question}
+                    subtitle={quizText}
                     visuals="image"
                   />
                 </div>
@@ -67,10 +51,9 @@ export const Answer = () => {
             <div className="frame-2">
               <div className="frame-wrapper">
                 <div className="frame-3">
-                  <div className="text-wrapper-2"><span style={{ color: 'blue' }}>획득 포인트 {answerData.quiz_point}Point</span>
-                    </div>
+                  <div className="text-wrapper-2">정답은 ‘{quizAnswer}’ 입니다.</div>
                   <p className="p">
-                    {answerData.quiz_explanation}
+                    {quizExplanation}
                   </p>
                 </div>
               </div>

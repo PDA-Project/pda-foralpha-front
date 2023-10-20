@@ -107,9 +107,9 @@ export const StockSearch = () => {
         handleSearch();
     };
 
-    const handleListItemClick = (themeName) => {
-        setSelectedTheme(themeName);
-        console.log(themeName);
+    const handleListItemClick = (themeName, themeDescription) => {
+      setSelectedTheme(themeName);
+      setThemeDescription(themeDescription); // 클릭한 테마의 설명을 설정
     };
     
     useEffect(() => {
@@ -174,55 +174,51 @@ export const StockSearch = () => {
                 
                 {selectedTab === "section2" && (
           <div className="text-field-instance-2">
-            <div className="chips">
-              {themes.map((theme) => (
-                <ListItem
-                  key={theme.name}
-                  className={`list-item-instance${selectedTheme === theme.name ? " active" : ""}`}
-                  controls="icon"
-                  divClassName="design-component-instance-node"
-                  icon={
-                    isThemeOpen && selectedTheme === theme.name ? (
-                      <ArrowDown2 className="down-arrow-icon" />
-                    ) : (
-                      <RightButton6 className="right-button-6" />
-                    )
-                  }
-                  showDescription={selectedTheme === theme.name}
-                  title={theme.title}
-                  visuals="none"
-                  onClick={() => handleListItemClick(theme.name, theme.description)}
-                />
-              ))}
+                <div className="text-field-instance-2">
+                <div className="chips">
+                    {themes.map((theme) => (
+                        <ListItem
+                            key={theme.name}
+                            className={`list-item-instance${selectedTheme === theme.name ? " active" : ""}`}
+                            controls="icon"
+                            divClassName="design-component-instance-node"
+                            description={themeDescription}
+                            icon={
+                                isThemeOpen && selectedTheme === theme.name ? (
+                                    <ArrowDown2 className="down-arrow-icon" />
+                                ) : (
+                                    <RightButton6 className="right-button-6" />
+                                )
+                            }
+                            showDescription={selectedTheme === theme.name}
+                            title={theme.title}
+                            visuals="none"
+                            onClick={() => handleListItemClick(theme.name, theme.description)} // 클릭할 때 테마 설명 전달
+                        />
+                    ))}
+                </div>
             </div>
-        </div>
+          </div>
         )}
 
-      {/* 클릭한 테마의 설명을 나타낼 부분 */}
-      {selectedTheme && (
-        <div className="theme-description">
-          {themeDescription}
-        </div>
-      )}
-
-                {isLoaded && selectedTab === "section1" && (
-                    <div className="data-display">
-                        {searchResults.length > 0 ? (
-                        searchResults.map((item, index) => (
-                            <div key={index} className="data-item">
-                                <div className="result-name">{item.stock_name}</div>
-                                <div className="result-content">
-                                <div className={`result-price-${item.stock_dod_percentage > 0 ? 'minus' : 'plus'}`}>{addCommasToNumber(item.stock_price)}</div>
-                                    <div className="result-predict">1명이 상승을 예측했어요</div>
-                            </div>
-                            </div>
-                            
-                        ))
-                        ) : (
-                        <p className="error-message">검색 결과가 없습니다.</p>
-                        )}
+        {isLoaded && selectedTab === "section1" && (
+            <div className="data-display">
+                {searchResults.length > 0 ? (
+                searchResults.map((item, index) => (
+                    <div key={index} className="data-item">
+                        <div className="result-name">{item.stock_name}</div>
+                        <div className="result-content">
+                        <div className={`result-price-${item.stock_dod_percentage > 0 ? 'minus' : 'plus'}`}>{addCommasToNumber(item.stock_price)}</div>
+                            <div className="result-predict">1명이 상승을 예측했어요</div>
                     </div>
+                    </div>
+                    
+                ))
+                ) : (
+                <p className="error-message">검색 결과가 없습니다.</p>
                 )}
+            </div>
+        )}
 
                 
                 </div>
